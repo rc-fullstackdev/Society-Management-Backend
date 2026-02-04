@@ -1,0 +1,27 @@
+const route = require("express").Router()
+const secretary = require("../controller/secretary.controller")
+const { secretaryProtected } = require("../middleware/auth.middleware")
+
+route
+    .get("/get-all-residents", secretaryProtected, secretary.getAllResidents)
+    .get("/get-guard", secretaryProtected, secretary.getSecurityGuard)
+    .patch("/user-access/:role/:id", secretaryProtected, secretary.updateUserAccess)
+    .post("/create-maintenance", secretaryProtected, secretary.createMaintenance)
+    .get("/get-all-maintenance", secretaryProtected, secretary.getAllMaintenance)
+    .get("/get-all-payment", secretaryProtected, secretary.getAllPaymentHistory)
+    .post("/cash-payment", secretaryProtected, secretary.addCashMaintenanceBySecretary)
+    .get("/residential/:id", secretaryProtected, secretary.getResidentById)
+    .post("/add-event", secretaryProtected, secretary.addEvent)
+    .get("/get-all-event", secretaryProtected, secretary.getAllEvents)
+    .get("/get-complaint", secretaryProtected, secretary.getsocietyComplaint)
+    .get("/complaint/:id", secretaryProtected, secretary.getComplaintById)
+    .patch("/update-complaint/:id", secretaryProtected, secretary.updateSocietyComplaint)
+    .patch("/update-resident/:id", secretaryProtected, secretary.updateResident)
+    .patch("/update-guard/:id", secretaryProtected, secretary.updateGuard)
+    .get("/get-society-guest", secretaryProtected, secretary.getAllVisitedGuestsForSecretary)
+    .get("/get-facility-booking", secretaryProtected, secretary.getFacilityBooking)
+    .get("/get-resident-booking/:id", secretaryProtected, secretary.getResidentBookingById)
+    .patch("/update-facility-booking/:bookingId", secretaryProtected, secretary.updateFacilityBookingStatus)
+    .post("/facility-booking/:billId/generate-bill", secretaryProtected, secretary.createFacilityBookingBill)
+
+module.exports = route
